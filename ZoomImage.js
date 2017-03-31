@@ -51,22 +51,30 @@ class ZoomImage extends Component {
     this.enableModal = false;
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
-    Image.getSize(this.props.source.uri, (w, h) => {
-      let ratio = w / h;
+    this.getMaxSizeByRatio = this.getMaxSizeByRatio.bind(this);
+  }
+  getMaxSizeByRatio (ratio) {
+    return {
+      width: ratio >= winRatio ? winWidth : winWidth / ratio,
+      height: ratio >= winRatio ? winWidth / ratio : winHeight
+    };
+  }
+  componentDidMount () {
+    if (this.props.source.uri) {
+      Image.getSize(this.props.source.uri, (w, h) => {
+        this.setState((state) => {
+          state.maxSize = this.getMaxSizeByRatio(w / h);
+          this.enableModal = true;
+        });
+      });
+    } else {
       this.setState((state) => {
-        state.maxSize = {
-          width: ratio >= winRatio ? winWidth : winWidth / ratio,
-          height: ratio >= winRatio ? winWidth / ratio : winHeight
-        };
+        state.maxSize = this.getMaxSizeByRatio(this.props.imgStyle.width / this.props.imgStyle.height);
         this.enableModal = true;
       });
-    });
+    }
   }
-  componentWillMount() {
-  }
-  componentDidMount() {
-  }
-  openModal() {
+  openModal () {
     if (!this.refs.view || !this.enableModal) return;
     RCTUIManager.measure(findNodeHandle(this.refs.view), (x, y, w, h, px, py) => {
       this.originPosition = {x, y, w, h, px, py};
@@ -75,12 +83,12 @@ class ZoomImage extends Component {
       isModalVisible: true
     });
   }
-  closeModal() {
+  closeModal () {
     this.setState({
       isModalVisible: false
     });
   }
-  render() {
+  render () {
     return (
       <TouchableWithoutFeedback style={this.props.imgStyle}
         onPress={this.openModal}
