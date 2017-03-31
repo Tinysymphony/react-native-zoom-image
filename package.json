@@ -1,0 +1,40 @@
+{
+	"name": "react-native-zoom-image",
+	"version": "0.0.1",
+	"description": "Image view component for react-native, like Twitter.",
+	"main": "./ZoomImage.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Tinysymphony/react-native-zoom-image.git"
+	},
+	"keywords": [
+		"react-native",
+		"react-native-zoom-image",
+		"image-viewer"
+	],
+	"scripts": {
+		"start": "react-native start",
+		"ios": "react-native run-ios",
+		"android": "react-native run-android",
+		"test": "jest",
+		"coverage": "cat ./coverage/lcov.info | coveralls",
+		"changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"babel-jest": "19.0.0",
+		"babel-preset-react-native": "1.9.1",
+		"coveralls": "^2.13.0",
+		"cz-conventional-changelog": "^2.0.0",
+		"enzyme": "^2.8.0",
+		"istanbul": "^0.4.5",
+		"jest": "19.0.2",
+		"react": "~15.4.1",
+		"react-dom": "^15.4.2",
+		"react-native": "0.42.3",
+		"react-test-renderer": "^15.4.2"
+	},
+	"jest": {
+		"preset": "react-native"
+	}
+}
