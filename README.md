@@ -2,6 +2,8 @@
 
 ZoomImage component for React Native Application (ios / android)
 
+> **Only works with https network images** [For now, we can't get size of required images.]
+> If you need to support http network images, modify info.plist please :)
 
 ### Examples
 
