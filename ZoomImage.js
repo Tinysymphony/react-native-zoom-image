@@ -5,7 +5,6 @@
 import React, {PropTypes, Component} from 'react';
 import {
   View,
-  Text,
   Image,
   Modal,
   Easing,
@@ -30,14 +29,18 @@ class ZoomImage extends Component {
     moveCapture: PropTypes.bool,
     responderNegotiate: PropTypes.func,
     easingFunc: PropTypes.func,
-    duration: PropTypes.number,
+    rebounceDuration: PropTypes.number,
+    closeDuration: PropTypes.number,
+    showDuration: PropTypes.number,
     enableScaling: PropTypes.bool
   }
   static defaultProps = {
     disabled: false,
     startCapture: false,
     moveCapture: false,
-    duration: 800,
+    rebounceDuration: 800,
+    closeDuration: 140,
+    showDuration: 100,
     easingFunc: Easing.ease,
     enableScaling: false
   }
@@ -114,7 +117,9 @@ class ZoomImage extends Component {
             size={this.state.maxSize}
             minAlpha={this.props.minAlpha}
             source={this.props.source}
-            duration={this.props.duration}
+            rebounceDuration={this.props.rebounceDuration}
+            closeDuration={this.props.closeDuration}
+            showDuration={this.props.showDuration}
             easingFunc={this.props.easingFunc}
             enableScaling={this.props.enableScaling}
           />
@@ -205,13 +210,13 @@ class ImageModal extends Component {
     return true;
   }
   _closeModal(isDown) {
-    const {easingFunc, onClose} = this.props;
+    const {easingFunc, onClose, closeDuration} = this.props;
     let current = this._contentStyle.style.top;
     this._inAnimation = true;
     new Animation({
       start: current,
       end: isDown ? winHeight : -winHeight,
-      duration: 140,
+      duration: closeDuration,
       easingFunc,
       onAnimationFrame: (val) => {
         this._updateNativeStyles(val);
@@ -230,13 +235,13 @@ class ImageModal extends Component {
     this._closeModal(true);
   }
   _rebounce(isDown) {
-    const {duration, easingFunc} = this.props;
+    const {rebounceDuration, easingFunc} = this.props;
     let current = this._contentStyle.style.top;
     this._inAnimation = true;
     new Animation({
       start: current,
       end: 0,
-      duration: Math.abs(current / winHeight) * duration,
+      duration: Math.abs(current / winHeight) * rebounceDuration,
       easingFunc,
       onAnimationFrame: (val) => {
         this._updateNativeStyles(val);
@@ -279,7 +284,7 @@ class ImageModal extends Component {
     new Animation({
       start: 0,
       end: 1,
-      duration: 100,
+      duration: this.props.showDuration,
       easingFunc: Easing.ease,
       onAnimationFrame: (val) => {
         this.mask && this.mask.setNativeProps({style: {
@@ -349,8 +354,6 @@ const styles = StyleSheet.create({
   },
   modalText: {
     color: '#fff'
-  },
-  img: {
   }
 });
 
