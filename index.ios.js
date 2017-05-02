@@ -9,7 +9,8 @@ import {
   View,
   Text,
   Easing,
-  ScrollView
+  ScrollView,
+  TouchableHighlight
 } from 'react-native';
 
 import ZoomImage from './ZoomImage';
@@ -18,18 +19,21 @@ export default class ZoomImageExample extends Component {
   constructor(props) {
     super(props);
     this.text = '';
+    this.state = {
+      enable: true
+    };
   }
   render() {
     return (
       <ScrollView>
         <View style={styles.content}>
           <Text style={styles.txt}>Zoom Image Examples! Try to click them~</Text>
-
           <View style={styles.imgItem}>
             <ZoomImage
               source={{uri: 'https://avatars2.githubusercontent.com/u/7685233?v=3&s=460'}}
               imgStyle={{width: 220, height: 220}}
               style={styles.img}
+              disabled={!this.state.enable}
               />
           </View>
 
@@ -75,6 +79,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 20
+  },
+  btn: {
+    marginTop: 10,
+    padding: 10,
+    overflow: 'hidden',
+    borderRadius: 5,
+    backgroundColor: '#37b9d5'
+  },
+  btnText: {
+    fontSize: 14,
+    color: '#f0f0f0'
   }
 });
 

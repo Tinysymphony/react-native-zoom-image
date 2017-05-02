@@ -30,16 +30,22 @@
 		"istanbul": "^0.4.5",
 		"jest": "19.0.2",
 		"react": "~15.4.1",
+		"react-addons-test-utils": "^15.5.1",
 		"react-dom": "^15.4.2",
 		"react-native": "0.42.3",
 		"react-test-renderer": "^15.4.2"
 	},
 	"jest": {
-		"preset": "react-native"
+		"preset": "react-native",
+		"verbose": true,
+		"collectCoverage": true,
+		"moduleFileExtensions": [
+			"js"
+		]
 	},
 	"config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  }
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	}
 }

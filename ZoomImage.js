@@ -25,6 +25,7 @@ const RCTUIManager = NativeModules.UIManager;
 
 class ZoomImage extends Component {
   static propTypes = {
+    disabled: PropTypes.bool,
     startCapture: PropTypes.bool,
     moveCapture: PropTypes.bool,
     responderNegotiate: PropTypes.func,
@@ -33,6 +34,7 @@ class ZoomImage extends Component {
     enableScaling: PropTypes.bool
   }
   static defaultProps = {
+    disabled: false,
     startCapture: false,
     moveCapture: false,
     duration: 800,
@@ -51,6 +53,7 @@ class ZoomImage extends Component {
     this.enableModal = false;
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.modalRefBind = this.modalRefBind.bind(this);
     this.getMaxSizeByRatio = this.getMaxSizeByRatio.bind(this);
   }
   getMaxSizeByRatio (ratio) {
@@ -75,7 +78,7 @@ class ZoomImage extends Component {
     }
   }
   openModal () {
-    if (!this.refs.view || !this.enableModal) return;
+    if (!this.refs.view || !this.enableModal || this.props.disabled) return;
     RCTUIManager.measure(findNodeHandle(this.refs.view), (x, y, w, h, px, py) => {
       this.originPosition = {x, y, w, h, px, py};
     });
@@ -84,9 +87,13 @@ class ZoomImage extends Component {
     });
   }
   closeModal () {
+    if (this.props.disabled) return;
     this.setState({
       isModalVisible: false
     });
+  }
+  modalRefBind (modal) {
+    this._modal = modal;
   }
   render () {
     return (
@@ -99,6 +106,8 @@ class ZoomImage extends Component {
             resizeMode={this.props.resizeMode}
             style={this.props.imgStyle}/>
           <ImageModal
+            ref={this.modalRefBind}
+            disabled={this.props.disabled}
             visible={this.state.isModalVisible}
             onClose={this.closeModal}
             originPosition={this.originPosition}
@@ -107,7 +116,8 @@ class ZoomImage extends Component {
             source={this.props.source}
             duration={this.props.duration}
             easingFunc={this.props.easingFunc}
-            enableScaling={this.props.enableScaling}/>
+            enableScaling={this.props.enableScaling}
+          />
         </View>
       </TouchableWithoutFeedback>
     );
@@ -159,12 +169,12 @@ class ImageModal extends Component {
   _onStartShouldSetPanResponder (evt, gestureState) {
     // set responder for tapping when the drawer is open
     // TODO: tap close
-    if (this._inAnimation) return;
+    if (this._inAnimation || this.props.disabled) return;
     return false;
   }
   _onMoveShouldSetPanResponder (evt, gestureState) {
     // custom pan responder condition function
-    if (this._inAnimation) return;
+    if (this._inAnimation || this.props.disabled) return;
     if (this.props.responderNegotiate && this.props.responderNegotiate(evt, gestureState) === false) return false;
     if (this._touchPositionCheck(gestureState)) {
       return true;
