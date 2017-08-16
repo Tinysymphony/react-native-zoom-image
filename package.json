@@ -20,7 +20,9 @@
 		"coverage": "cat ./coverage/lcov.info | coveralls",
 		"changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
 	},
-	"dependencies": {},
+	"dependencies": {
+		"prop-types": "^15.5.10"
+	},
 	"devDependencies": {
 		"babel-jest": "19.0.0",
 		"babel-preset-react-native": "1.9.1",
