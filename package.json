@@ -1,6 +1,6 @@
 {
 	"name": "react-native-zoom-image",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Image view component for react-native, like Twitter.",
 	"main": "./ZoomImage.js",
 	"repository": {
@@ -20,20 +20,25 @@
 		"coverage": "cat ./coverage/lcov.info | coveralls",
 		"changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
 	},
-	"dependencies": {},
+	"peerDependencies": {
+		"prop-types": "^15.6.0",
+		"react": "^15.4.2",
+		"react-native": "^0.41.2"
+	},
 	"devDependencies": {
-		"babel-jest": "19.0.0",
-		"babel-preset-react-native": "1.9.1",
-		"coveralls": "^2.13.0",
+		"coveralls": "^2.13.1",
 		"cz-conventional-changelog": "^2.0.0",
-		"enzyme": "^2.8.0",
+		"babel-jest": "21.2.0",
+		"babel-preset-react-native": "4.0.0",
+		"enzyme": "^3.2.0",
+		"enzyme-adapter-react-16": "^1.1.0",
 		"istanbul": "^0.4.5",
-		"jest": "19.0.2",
-		"react": "~15.4.1",
-		"react-addons-test-utils": "^15.5.1",
-		"react-dom": "^15.4.2",
-		"react-native": "0.42.3",
-		"react-test-renderer": "^15.4.2"
+		"jest": "21.2.1",
+		"react": "^16.1.0",
+		"react-addons-test-utils": "^15.6.2",
+		"react-dom": "^16.2.0",
+		"react-native": "^0.50.0",
+		"react-test-renderer": "16.0.0"
 	},
 	"jest": {
 		"preset": "react-native",

@@ -2,7 +2,9 @@
  * Created by TinySymphony on 2017-03-23.
  */
 
-import React, {PropTypes, Component} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import {
   View,
   Image,

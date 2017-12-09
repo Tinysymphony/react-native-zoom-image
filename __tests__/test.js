@@ -8,13 +8,20 @@ import {
   StyleSheet
 } from 'react-native';
 import React from 'react';
-import {shallow} from 'enzyme';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
 
 import ZoomImage from '../ZoomImage';
 import Animation from '../Animation';
 
 let {width, height, scale} = Dimensions.get('window');
+
+Enzyme.configure({
+  adapter: new Adapter()
+});
+
+const shallow = Enzyme.shallow;
 
 const styles = StyleSheet.create({
   img: {
